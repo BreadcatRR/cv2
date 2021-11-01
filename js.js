@@ -40,8 +40,9 @@ async function main() {
 			// Append all elements found in search to table
 			results.forEach(function(elem) {
 				list_item = document.createElement('li')
+				
 
-				list_item.innerHTML = elem[0]
+				// list_item.innerHTML = elem[0]
 				$('#search-results').append(list_item)
 
 				chip = document.createElement('div')
@@ -55,14 +56,16 @@ async function main() {
 
 				elem[1].forEach(function(input) {
 					chipInput = document.createElement('div')
-					chipInput.className = 'chip-port chip-type-' + input.ReadonlyType.split(' ').join('-')
+					let name = input.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
+					chipInput.className = 'chip-port chip-type-' + name
 
 					inputs.append(chipInput)
 				})
 				
 				elem[2].forEach(function(output) {
 					chipOutput = document.createElement('div')
-					chipOutput.className = 'chip-port chip-type-' + output.ReadonlyType.split(' ').join('-')
+					let name = output.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
+					chipOutput.className = 'chip-port chip-type-' + name
 
 					outputs.append(chipOutput)
 				})
@@ -71,6 +74,10 @@ async function main() {
 				chip.append(outputs)
 				
 				list_item.append(chip)
+
+				text = document.createElement('p')
+				text.textContent = elem[0]
+				list_item.append(text)
 			})
 		}
 	}
