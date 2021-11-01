@@ -47,22 +47,29 @@ async function main() {
 				chip = document.createElement('div')
 				chip.className = 'chip-preview'
 
+				inputs = document.createElement('div')
+				inputs.className = 'input-port'
+				
+				outputs = document.createElement('div')
+				outputs.className = 'output-port'
+
 				elem[1].forEach(function(input) {
 					chipInput = document.createElement('div')
-					chipInput.className = 'input-chip chip-type-' + input.ReadonlyType.split(' ').join('-')
+					chipInput.className = 'chip-port chip-type-' + input.ReadonlyType.split(' ').join('-')
 
-					chip.append(chipInput)
+					inputs.append(chipInput)
 				})
-
+				
 				elem[2].forEach(function(output) {
 					chipOutput = document.createElement('div')
-					chipOutput.className = 'output-chip chip-type-' + output.ReadonlyType.split(' ').join('-')
+					chipOutput.className = 'chip-port chip-type-' + output.ReadonlyType.split(' ').join('-')
 
-					chip.append(chipOutput)
+					outputs.append(chipOutput)
 				})
-
-				console.log(elem[2])
-
+				
+				chip.append(inputs)
+				chip.append(outputs)
+				
 				list_item.append(chip)
 			})
 		}

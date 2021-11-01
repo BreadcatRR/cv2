@@ -34,22 +34,24 @@ body {
     border-radius: 3px;
 }
 
-.chip-preview > .input-chip{
+.chip-preview > .input-port{
     width: 10px;
-    height: 5px;
-    border-radius: 1px;
-    margin-bottom: 2px;
-    
     margin-left: -5px;
+    float: left;
 }
 
-.chip-preview > .output-chip{
+.chip-preview > .output-port{
+    width: 10px;
+    margin-right: -5px;
+    float: right;
+}
+
+.chip-port {
     width: 10px;
     height: 5px;
     border-radius: 1px;
     margin-bottom: 2px;
     
-    margin-left: 1.8rem;
 }
 
 .chip-type-string {
@@ -71,9 +73,17 @@ body {
 .chip-type-AI, .chip-type-Combatant, .chip-type-Player, .chip-type-Consumable, .chip-type-Rec-Room-Object {
     background: rgb(251, 255, 0);
 }
+
 .chip-type-exec {
     background: rgb(255, 145, 0);
     border-radius: 0;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
+
+/* .chip-type-exec-output {
+    background: rgb(255, 145, 0);
+    border-radius: 0;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+} */
