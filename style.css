@@ -1,0 +1,79 @@
+body {
+    background: rgb(70, 70, 70);
+}
+
+#search-cv2 {
+    margin: 30px;
+}
+
+#search-results > li {
+    list-style-type: none;
+    margin: 10px;
+    
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: white;
+    background: grey;
+    padding: 24px;
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+}
+
+.chip-preview {
+    width: 35px;
+    /* height: 35px; */
+    background: rgb(179, 179, 179);
+    display: inline-block;
+    margin: 0 20px;
+
+    padding-top: 10px;
+    padding-bottom: 5px;
+
+    border-radius: 3px;
+}
+
+.chip-preview > .input-chip{
+    width: 10px;
+    height: 5px;
+    border-radius: 1px;
+    margin-bottom: 2px;
+    
+    margin-left: -5px;
+}
+
+.chip-preview > .output-chip{
+    width: 10px;
+    height: 5px;
+    border-radius: 1px;
+    margin-bottom: 2px;
+    
+    margin-left: 1.8rem;
+}
+
+.chip-type-string {
+    background: rgb(147, 0, 192);
+}
+.chip-type-T {
+    background: white;
+    
+}
+.chip-type-float, .chip-type-vector3 {
+    background: rgb(0, 225, 255);
+}
+.chip-type-int {
+    background: rgb(13, 110, 34);
+}
+.chip-type-bool {
+    background: rgb(177, 12, 6);
+}
+.chip-type-AI, .chip-type-Combatant, .chip-type-Player, .chip-type-Consumable, .chip-type-Rec-Room-Object {
+    background: rgb(251, 255, 0);
+}
+.chip-type-exec {
+    background: rgb(255, 145, 0);
+    border-radius: 0;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
