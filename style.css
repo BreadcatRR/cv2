@@ -12,7 +12,6 @@ body {
     flex-wrap: wrap;
 }
 
-
 #search-cv2 {
     margin: 15px;
     width: 200px;
@@ -20,8 +19,6 @@ body {
     
     padding: 10px 30px;
     
-    /* color: rgb(51, 51, 51); */
-
 	box-shadow: 0 2px 8px #b0b0b0;
 	background: rgb(240, 240, 240);
 
@@ -46,15 +43,23 @@ body {
 	font-weight: bold;
 
     overflow: hidden;
-    width: 400px;
+    width: 380px;
+    height: 80px;
     scale: 100%;
 
-    transition: background 300ms, scale 300ms;
+    user-select: none;
+    transition: background 300ms, scale 300ms, height 500ms;
 }
 
 #search-results > li:hover {
 	background: rgb(231, 231, 231);
     scale: 102%;
+
+}
+
+#search-results > #on-click-chip {
+    height: 200px !important;
+    /* background: red !important; */
 }
 
 .chip-preview {
@@ -101,7 +106,9 @@ body {
 .chip-type-bool, .chip-type-list  {
     background: rgb(177, 12, 6);
 }
-.chip-type-ai, .chip-type-combatant, .chip-type-player, .chip-type-consumable, .chip-type-rec-room-object, .chip-type-patrol-point {
+.chip-type-ai, .chip-type-button, .chip-type-vector-gadget, .chip-type-combatant, 
+.chip-type-player, .chip-type-consumable, .chip-type-rec-room-object, 
+.chip-type-patrol-point, .chip-type-toggle-button, .chip-type-costume{
     background: rgb(251, 255, 0);
 }
 
@@ -111,10 +118,3 @@ body {
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-
-/* .chip-type-exec-output {
-    background: rgb(255, 145, 0);
-    border-radius: 0;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-} */

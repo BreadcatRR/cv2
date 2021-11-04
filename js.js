@@ -41,23 +41,46 @@ async function main() {
 			results.forEach(function(elem) {
 				list_item = document.createElement('li')
 				
-
-				// list_item.innerHTML = elem[0]
+				
 				$('#search-results').append(list_item)
+	
+				// list_item.addEventListener("click", function(e) {
+				// 	console.log(e.target.className)
+				// 	if (e.target.className == '') {
+				// 				e.target.className = 'on-click-chip'
+				// 				e.target.style.height = '400px'
+				// 			} else {
+				// 				e.target.className = ''
+				// 				e.target.style.height = '80px'
+
+				// 			}
+				// });
+				list_item.onclick = function(e) {
+					if (e.target.classList.contains('clickable') || e.target.tagName == 'LI') {
+						let target = e.target.closest('li')
+						if (target.className == '') {
+							target.className = 'on-click-chip'
+							target.style.height = '400px'
+						} else {
+							target.className = ''
+							target.style.height = '80px'
+						}
+					}
+				}
 
 				chip = document.createElement('div')
-				chip.className = 'chip-preview'
+				chip.className = 'clickable chip-preview'
 
 				inputs = document.createElement('div')
-				inputs.className = 'input-port'
+				inputs.className = 'clickable input-port'
 				
 				outputs = document.createElement('div')
-				outputs.className = 'output-port'
+				outputs.className = 'clickable output-port'
 
 				elem[1].forEach(function(input) {
 					chipInput = document.createElement('div')
 					let name = input.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
-					chipInput.className = 'chip-port chip-type-' + name
+					chipInput.className = 'clickable chip-port chip-type-' + name
 
 					inputs.append(chipInput)
 				})
@@ -65,7 +88,7 @@ async function main() {
 				elem[2].forEach(function(output) {
 					chipOutput = document.createElement('div')
 					let name = output.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
-					chipOutput.className = 'chip-port chip-type-' + name
+					chipOutput.className = 'clickable chip-port chip-type-' + name
 
 					outputs.append(chipOutput)
 				})
@@ -74,7 +97,7 @@ async function main() {
 				chip.append(outputs)
 				
 				list_item.append(chip)
-
+				
 				text = document.createElement('p')
 				text.textContent = elem[0]
 				list_item.append(text)
