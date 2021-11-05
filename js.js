@@ -50,6 +50,8 @@ async function main() {
 				// Append chip name/hash to an attribute to lookup later
 				list_item.chip = elem[3]
 
+				// When list item is clicked, open up a menu and show description for chips +
+				// Enlarged version of chips with tooltips for each port
 				list_item.onclick = function(e) {
 					if (e.target.classList.contains('clickable') || e.target.tagName == 'LI') {
 						let target = e.target.closest('li')
@@ -62,7 +64,9 @@ async function main() {
 								let cont = document.createElement('div')
 								let descTitle = document.createElement('p')
 								let desc = document.createElement('p')
-								
+								let chip_preview_large = target.querySelector('.chip-preview').cloneNode(true)
+								chip_preview_large.className = 'clickable chip-large-preview'
+
 								cont.classList.add('chip-details-container')
 								cont.id = 'chip-info-container'
 
@@ -101,20 +105,16 @@ async function main() {
 								
 								cont.append(descTitle)
 								cont.append(desc)
+								cont.append(chip_preview_large)
 								target.append(cont)
-
+								
 								target.className = 'on-click-chip'
 								target.style.height = '400px'
 							}
 						} else {
 							target.className = ''
-							// target.transition().style('height','80px').on('end', function() {this.remove()})
 							target.style.height = '80px'
-							
-							// target.querySelector('.chip-details-container').empty()
-							// target.querySelector('.chip-details-container').on('transitionend').remove()
 						}
-						// console.log(cv2.Nodes[target.chip])
 					}
 				}
 				
@@ -128,18 +128,28 @@ async function main() {
 				outputs.className = 'clickable output-port'
 				
 				elem[1].forEach(function(input) {
-					chipInput = document.createElement('div')
+					let chipInput = document.createElement('div')
 					let name = input.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
 					chipInput.className = 'clickable chip-port chip-type-' + name
 
+					let chipTooltip = document.createElement('div')
+					chipTooltip.classList.add('chip-port-tooltip')
+					chipTooltip.innerHTML = input.ReadonlyType
+
+					chipInput.append(chipTooltip)
 					inputs.append(chipInput)
 				})
 				
 				elem[2].forEach(function(output) {
-					chipOutput = document.createElement('div')
+					let chipOutput = document.createElement('div')
 					let name = output.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
 					chipOutput.className = 'clickable chip-port chip-type-' + name
 
+					let chipTooltip = document.createElement('div')
+					chipTooltip.classList.add('chip-port-tooltip')
+					chipTooltip.innerHTML = output.ReadonlyType
+
+					chipOutput.append(chipTooltip)
 					outputs.append(chipOutput)
 				})
 				
