@@ -1,6 +1,4 @@
-:root {
-    
-}
+
 
 body {
     background: rgb(241, 241, 241);
@@ -132,4 +130,19 @@ body {
     border-radius: 0;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+}
+
+.chip-details-container {
+    margin-top: 80px;
+    opacity: 0;
+    transition: margin 500ms, opacity 500ms;
+}
+
+.chip-details-container > * {
+    display: block;
+}
+
+.chip-description {
+    font-size: 20px;
+    margin-bottom: -10px;
 }
