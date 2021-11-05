@@ -2,6 +2,7 @@
 
 body {
     background: rgb(241, 241, 241);
+    overflow-x: hidden;
 }
 
 * {
@@ -203,7 +204,6 @@ body {
     left: 50%;
     top: 20px;
     transform: translateX(-50%);
-    float: left;
     display: inline-block;
 
     width: 150px;
@@ -214,4 +214,12 @@ body {
     padding-top: 30px;
     padding-bottom: 15px;
     border-radius: 9px;
+}
+
+#filter-list > button {
+    padding: 8px 5px;
+    margin: 6px;
+    border-radius: 3px;
+    border: none;
+    min-width: 150px;
 }

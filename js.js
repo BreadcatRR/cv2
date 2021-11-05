@@ -9,14 +9,11 @@ function fetchFilters(cv2, nodes) {
 
 	for (var i = 0; i < nodes.length; i++) {
 		let chip = cv2.Nodes[nodes[i]]
-		// console.log(chip.NodeFilters)
 		chip.NodeFilters.forEach(function(filterGroup, i) {
-			// console.log(filterGroup)
 			filterGroup.FilterPath.forEach(function(filterName, index) {
 				if (!filter_list.includes(filterName)) {
 					filter_list.push(filterName)
 				}
-				// console.log(filterName)
 			})
 		})
 	}
@@ -28,7 +25,16 @@ async function main() {
 	const cv2 = await fetchCV2()
 	const nodes = Object.keys(cv2.Nodes)
 	const filters = fetchFilters(cv2, nodes)
-	console.log(filters)
+
+	// Setup filters
+	let filter_div = $('#filter-list:first')
+	filters.forEach(function(elem) {
+		var button = document.createElement('button')
+		button.type = 'button'
+		button.textContent = elem
+
+		filter_div.append(button)
+	})
 
 	function searchCV2(value) {
 		$('#search-results').empty()
