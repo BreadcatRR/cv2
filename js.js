@@ -4,16 +4,34 @@ async function fetchCV2() {
 	return data
 }
 
+function fetchFilters(cv2, nodes) {
+	let filter_list = [];
+
+	for (var i = 0; i < nodes.length; i++) {
+		let chip = cv2.Nodes[nodes[i]]
+		// console.log(chip.NodeFilters)
+		chip.NodeFilters.forEach(function(filterGroup, i) {
+			// console.log(filterGroup)
+			filterGroup.FilterPath.forEach(function(filterName, index) {
+				if (!filter_list.includes(filterName)) {
+					filter_list.push(filterName)
+				}
+				// console.log(filterName)
+			})
+		})
+	}
+
+	return filter_list
+}
+
 async function main() {
 	const cv2 = await fetchCV2()
 	const nodes = Object.keys(cv2.Nodes)
-	
-	// console.log(cv2)
+	const filters = fetchFilters(cv2, nodes)
+	console.log(filters)
 
 	function searchCV2(value) {
 		$('#search-results').empty()
-		
-		// console.log(cv2.Nodes)
 
 		for (var i = 0; i < nodes.length; i++) {
 			let raw_name = nodes[i]
@@ -30,8 +48,6 @@ async function main() {
 				
 				try { var outputs = chip.NodeDescs[0].Outputs}
 				catch { var outputs = []}
-				
-				// console.log(outputs)
 				
 				results.push([
 							chip.ReadonlyName,
