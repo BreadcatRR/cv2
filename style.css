@@ -1,3 +1,7 @@
+:root {
+    
+}
+
 body {
     background: rgb(241, 241, 241);
 }
@@ -37,14 +41,15 @@ body {
 	box-shadow: 0 2px 8px #b0b0b0;
 	padding: 24px;
 	border-radius: 6px;
-	display: flex;
+	/* display: flex;
 	align-items: center;
-	flex-direction: row;
+	flex-direction: row; */
 	font-weight: bold;
-
+    
     overflow: hidden;
     width: 380px;
     height: 80px;
+    min-height: 60px;
     scale: 100%;
 
     user-select: none;
@@ -54,7 +59,6 @@ body {
 #search-results > li:hover {
 	background: rgb(231, 231, 231);
     scale: 102%;
-
 }
 
 #search-results > #on-click-chip {
@@ -63,6 +67,11 @@ body {
 }
 
 .chip-preview {
+    position: relative;
+    top: 40px;
+    transform: translateY(-50%);
+    float: left;
+
     width: 50px;
     background: rgb(179, 179, 179);
     background: linear-gradient(180deg, rgba(115,115,115,1) 6px, rgba(171,171,171,1) 6px);
@@ -70,6 +79,12 @@ body {
     padding-top: 10px;
     padding-bottom: 5px;
     border-radius: 3px;
+}
+
+#search-results > li > p {
+    position: relative;
+    top: 16px;
+    /* transform: translateY(-50%) */
 }
 
 .chip-preview > .input-port{

@@ -67,7 +67,7 @@ async function main() {
 						}
 					}
 				}
-
+				
 				chip = document.createElement('div')
 				chip.className = 'clickable chip-preview'
 
@@ -76,7 +76,7 @@ async function main() {
 				
 				outputs = document.createElement('div')
 				outputs.className = 'clickable output-port'
-
+				
 				elem[1].forEach(function(input) {
 					chipInput = document.createElement('div')
 					let name = input.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
@@ -100,6 +100,7 @@ async function main() {
 				
 				text = document.createElement('p')
 				text.textContent = elem[0]
+				text.className = 'clickable'
 				list_item.append(text)
 			})
 		}
