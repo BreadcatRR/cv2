@@ -1,1 +1,1 @@
-http://cv2.wiki/
+https://cv2.wiki
