@@ -1,1 +1,1 @@
-https://breadcat-rr.github.io/cv2/
+http://cv2.wiki/
