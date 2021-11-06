@@ -47,12 +47,14 @@ body {
     
     overflow: hidden;
     width: 380px;
-    height: 80px;
-    min-height: 60px;
+    height: max-content;
+    max-height: 80px;
+    /* height: 80px; */
+    min-height: 80px;
     scale: 100%;
 
     user-select: none;
-    transition: background 300ms, scale 300ms, height 500ms;
+    transition: background 300ms, scale 300ms, max-height 500ms;
 }
 
 #search-results > li:hover {
@@ -112,7 +114,7 @@ body {
     margin-bottom: 4px;
 }
 
-.chip-type-string {
+.chip-type-string, .chip-type-list-string {
     background: rgb(147, 0, 192);
 }
 .chip-type-t {
@@ -146,6 +148,7 @@ body {
     transition: margin 500ms, opacity 500ms;
     display: inline-table;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .chip-details-container > * {
@@ -171,15 +174,21 @@ body {
     position: relative;
     top: -30px;
     display: none;
-    height: 20px;
-    color: #fff;
-    font-weight: 300;
-    background: rgb(46, 46, 46);
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgb(10, 10, 10);
-    padding: 3px 20px;
-    margin-left: -50%;
+    height: max-content;
+    width: max-content;
+    color: rgb(0, 0, 0);
+    background: rgb(235, 235, 235);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgb(146, 146, 146);
+    padding: 5px 10px;
     text-align: center;
+    max-width: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.chip-port-tooltip > p {
+   margin: 0;
 }
 
 .chip-large-preview > * > .chip-port:hover {

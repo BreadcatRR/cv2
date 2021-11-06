@@ -53,12 +53,16 @@ async function main() {
 				
 				try { var outputs = chip.NodeDescs[0].Outputs}
 				catch { var outputs = []}
+
+				try { var anyTypes = chip.NodeDescs[0].ReadonlyTypeParams}
+				catch { var anyTypes = []}
 				
 				results.push([
 							chip.ReadonlyName,
 							inputs,
 							outputs,
 							raw_name,
+							anyTypes,
 							])
 			}
 
@@ -90,6 +94,7 @@ async function main() {
 								chip_preview_large.className = 'clickable chip-large-preview'
 
 								cont.classList.add('chip-details-container')
+								cont.classList.add('clickable')
 								cont.id = 'chip-info-container'
 
 								if (chip_details.Description != ''){
@@ -101,7 +106,7 @@ async function main() {
 								desc.style.fontWeight = 300
 								
 								target.addEventListener("transitionend", function() {
-									if (this.style.height == '80px') {
+									if (this.style.maxHeight == '80px') {
 										cont.remove()
 									}
 								});
@@ -110,10 +115,11 @@ async function main() {
 									let container = this.querySelector('.chip-details-container')
 
 									if (container !== null) {
-										if (this.style.height == '80px') { // If list element it is enlarging
+										if (this.style.maxHeight == '80px') { // If list element it is enlarging
 											container.style.marginTop = '20px'
 											container.style.opacity = 0
-										} else if (parseInt(this.style.height) > 80) { // If it is returning to regular size
+										// } else if (this.style.height == 'fit-content') { // If it is returning to regular size
+										} else if (parseInt(this.style.maxHeight) > 80) { // If it is returning to regular size
 											container.style.opacity = 1
 											container.style.marginTop = '0'
 										}
@@ -131,11 +137,11 @@ async function main() {
 								target.append(cont)
 								
 								target.className = 'on-click-chip'
-								target.style.height = '400px'
+								target.style.maxHeight = '700px'
 							}
 						} else {
 							target.className = ''
-							target.style.height = '80px'
+							target.style.maxHeight = '80px'
 						}
 					}
 				}
@@ -149,28 +155,46 @@ async function main() {
 				outputs = document.createElement('div')
 				outputs.className = 'clickable output-port'
 				
+				//Iterate through all input ports of chip and add them and their css classes
 				elem[1].forEach(function(input) {
 					let chipInput = document.createElement('div')
 					let name = input.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
+					let tooltip = input.ReadonlyType
+
+					if (name == 't') {
+						tooltip = elem[4]['T']
+					// 	console.log(tooltip)
+					}
 					chipInput.className = 'clickable chip-port chip-type-' + name
 
 					let chipTooltip = document.createElement('div')
+					let chipTooltipText = document.createElement('p')
 					chipTooltip.classList.add('chip-port-tooltip')
-					chipTooltip.innerHTML = input.ReadonlyType
-
+					chipTooltipText.textContent = tooltip
+					
+					chipTooltip.append(chipTooltipText)
 					chipInput.append(chipTooltip)
 					inputs.append(chipInput)
 				})
 				
+				//Iterate through all output ports of chip and add them and their css classes
 				elem[2].forEach(function(output) {
 					let chipOutput = document.createElement('div')
 					let name = output.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
+					let tooltip = output.ReadonlyType
+
+					if (name == 't') {
+						tooltip = elem[4]['T']
+						// console.log(tooltip)
+					}
+					
 					chipOutput.className = 'clickable chip-port chip-type-' + name
-
 					let chipTooltip = document.createElement('div')
+					let chipTooltipText = document.createElement('p')
 					chipTooltip.classList.add('chip-port-tooltip')
-					chipTooltip.innerHTML = output.ReadonlyType
+					chipTooltipText.textContent = tooltip
 
+					chipTooltip.append(chipTooltipText)
 					chipOutput.append(chipTooltip)
 					outputs.append(chipOutput)
 				})
