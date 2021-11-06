@@ -10,11 +10,15 @@ function fetchFilters(cv2, nodes) {
 	for (var i = 0; i < nodes.length; i++) {
 		let chip = cv2.Nodes[nodes[i]]
 		chip.NodeFilters.forEach(function(filterGroup, i) {
-			filterGroup.FilterPath.forEach(function(filterName, index) {
-				if (!filter_list.includes(filterName)) {
-					filter_list.push(filterName)
-				}
-			})
+			if (!filter_list.includes(filterGroup.FilterPath[0])) {
+				filter_list.push(filterGroup.FilterPath[0])
+			}
+			
+			// filterGroup.FilterPath.forEach(function(filterName, index) {
+			// 	if (!filter_list.includes(filterName)) {
+			// 		filter_list.push(filterName)
+			// 	}
+			// })
 		})
 	}
 
@@ -29,16 +33,36 @@ async function main() {
 	// Setup filters
 	let filter_div = $('#filter-list:first')
 	filters.forEach(function(elem) {
-		var button = document.createElement('button')
-		button.textContent = elem
+		var checkbox_container = document.createElement('div')
+		var checkbox_text = document.createElement('p')
+		var button = document.createElement('input')
+		button.type = 'checkbox'
+		checkbox_text.textContent = elem
+		
+		checkbox_container.addEventListener('click',function() {
+			if (this.childNodes[0].checked == false) { this.childNodes[0].checked = true} 
+			else { this.childNodes[0].checked = false }
+		},capture=true)
 
-		filter_div.append(button)
+		button.addEventListener('click',function(e) {
+			e.preventDefault()
+		},capture=true)
+
+		// checkbox_text.onclick = function() {
+		// 	if (this.parentNode.childNodes[0].checked == false) { this.parentNode.childNodes[0].checked = true} 
+		// 	else { this.parentNode.childNodes[0].checked = false }
+		// }
+		
+		checkbox_container.append(button)
+		checkbox_container.append(checkbox_text)
+		filter_div.append(checkbox_container)
 	})
 
 	function searchCV2(value) {
 		$('#search-results').empty()
 
 		for (var i = 0; i < nodes.length; i++) {
+			// let active_filters = $('#filter-list').forEach 
 			let raw_name = nodes[i]
 			let chip = cv2.Nodes[nodes[i]]
 			let results = [];
