@@ -30,7 +30,6 @@ async function main() {
 	let filter_div = $('#filter-list:first')
 	filters.forEach(function(elem) {
 		var button = document.createElement('button')
-		button.type = 'button'
 		button.textContent = elem
 
 		filter_div.append(button)
@@ -65,8 +64,9 @@ async function main() {
 
 			// Append all elements found in search to table
 			results.forEach(function(elem) {
-				list_item = document.createElement('li')
-				
+				let list_item = document.createElement('li')
+				// let container = document.createElement('div')
+
 				$('#search-results').append(list_item)
 				
 				// Append chip name/hash to an attribute to lookup later
@@ -110,12 +110,12 @@ async function main() {
 									let container = this.querySelector('.chip-details-container')
 
 									if (container !== null) {
-										if (this.style.height == '80px') {
-											container.style.marginTop = '80px'
+										if (this.style.height == '80px') { // If list element it is enlarging
+											container.style.marginTop = '20px'
 											container.style.opacity = 0
-										} else if (parseInt(this.style.height) > 80) {
+										} else if (parseInt(this.style.height) > 80) { // If it is returning to regular size
 											container.style.opacity = 1
-											container.style.marginTop = '40px'
+											container.style.marginTop = '0'
 										}
 									}
 								});
@@ -179,11 +179,12 @@ async function main() {
 				chip.append(outputs)
 				
 				list_item.append(chip)
-				
+				// list_item.append(container)
 				text = document.createElement('p')
 				text.textContent = elem[0]
 				text.className = 'clickable'
 				list_item.append(text)
+				
 			})
 		}
 	}

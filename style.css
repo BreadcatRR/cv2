@@ -19,7 +19,6 @@ body {
     margin: 15px;
     width: 200px;
     height: 30px;
-	 -webkit-appearance: none;
     
     padding: 10px 30px;
     
@@ -80,6 +79,13 @@ body {
     padding-bottom: 5px;
     border-radius: 3px;
 }
+/* .chip-preview {
+    float: left;
+    width: 50px;
+    background: linear-gradient(180deg, rgba(115,115,115,1) 6px, rgba(171,171,171,1) 6px);
+    padding: 10px 0 4px 0;
+    border-radius: 3px;
+} */
 
 #search-results > li > p {
     position: relative;
@@ -135,9 +141,11 @@ body {
 }
 
 .chip-details-container {
-    margin-top: 80px;
+    margin-top: 20px;
     opacity: 0;
     transition: margin 500ms, opacity 500ms;
+    display: inline-table;
+    width: 100%;
 }
 
 .chip-details-container > * {
@@ -147,6 +155,7 @@ body {
 .chip-description {
     font-size: 20px;
     margin-bottom: -10px;
+    margin-top: 20px;
 }
 
 .chip-large-preview > * > .chip-port {
@@ -223,6 +232,4 @@ body {
     border-radius: 3px;
     border: none;
     min-width: 150px;
- -webkit-appearance: none;
-	background: #d7d7d7;
 }
