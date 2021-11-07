@@ -29,7 +29,7 @@
 				console.log(requested_chip)
 
 				for (var i = 0; i < keys.length; i++) {
-					var chip = cv2[keys[i]]
+					var chip = cv2.Nodes[keys[i]]
 					console.log(chip)
 					console.log(keys[i])
 					if (chip.ReadonlyName.toLowerCase().split(' ').join('-') == requested_chip.toLowerCase()) {
