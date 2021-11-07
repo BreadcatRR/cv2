@@ -21,7 +21,7 @@
 	async function main() {
 		if ( location.href.includes('chip') ) {
 				const cv2 = await fetchCV2()
-				var keys = Object.keys(cv2)
+				var keys = Object.keys(cv2.Nodes)
 				
 				console.log(cv2)
 				console.log(keys)
