@@ -60,26 +60,35 @@ async function main() {
 
 	function searchCV2(value) {
 		$('#search-results').empty()
+		
+		var filter = [];
+		$('#filter-list div input:checked').siblings().each(function(i,elem) {filter.push(elem.textContent)})
 
 		for (var i = 0; i < nodes.length; i++) {
 			// let active_filters = $('#filter-list').forEach 
 			let raw_name = nodes[i]
 			let chip = cv2.Nodes[nodes[i]]
 			let results = [];
-			
+				
+			console.log(filter)
+
 			// Search through all and check if value is inside chip name
+			
 			if (chip.ReadonlyName.toLowerCase().includes(value.toLowerCase())) {
 				var inputs
 				var outputs
 
-				try { var inputs = chip.NodeDescs[0].Inputs}
-				catch { var inputs = []}
+				try { var inputs = chip.NodeDescs[0].Inputs }
+				catch { var inputs = [] }
 				
-				try { var outputs = chip.NodeDescs[0].Outputs}
-				catch { var outputs = []}
+				try { var outputs = chip.NodeDescs[0].Outputs }
+				catch { var outputs = [] }
 
-				try { var anyTypes = chip.NodeDescs[0].ReadonlyTypeParams}
-				catch { var anyTypes = []}
+				try { var anyTypes = chip.NodeDescs[0].ReadonlyTypeParams }
+				catch { var anyTypes = [] }
+				
+				// try { var filters = chip.NodeFilters[0] }
+				// catch { var filters = [] }
 				
 				results.push([
 							chip.ReadonlyName,
@@ -87,6 +96,7 @@ async function main() {
 							outputs,
 							raw_name,
 							anyTypes,
+							// filters,
 							])
 			}
 

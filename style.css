@@ -95,7 +95,6 @@ body {
 #search-results > li > p {
     position: relative;
     top: 16px;
-    /* transform: translateY(-50%) */
 }
 
 .chip-preview > .input-port{
@@ -129,20 +128,28 @@ body {
 .chip-type-int {
     background: rgb(13, 110, 34);
 }
-.chip-type-bool, .chip-type-list  {
+.chip-type-bool, .chip-type-list-bool  {
     background: rgb(177, 12, 6);
 }
 .chip-type-ai, .chip-type-button, .chip-type-vector-gadget, .chip-type-combatant, 
 .chip-type-player, .chip-type-consumable, .chip-type-rec-room-object, 
-.chip-type-patrol-point, .chip-type-toggle-button, .chip-type-costume{
+.chip-type-patrol-point, .chip-type-toggle-button, .chip-type-costume,
+.chip-type-quaternion, .chip-type-list-quaternion {
     background: rgb(251, 255, 0);
 }
 
-.chip-type-exec {
+.input-port > .chip-type-exec {
     background: rgb(255, 145, 0);
     border-radius: 0;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+}
+
+.output-port > .chip-type-exec {
+    background: rgb(255, 145, 0);
+    border-radius: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 .chip-details-container {
@@ -214,11 +221,18 @@ body {
     float: right;
 }
 
-.chip-large-preview > * > .chip-type-exec {
+.chip-large-preview > .input-port > .chip-type-exec {
     background: rgb(255, 145, 0);
     border-radius: 0;
     border-top-right-radius: 9px;
     border-bottom-right-radius: 9px;
+}
+
+.chip-large-preview > .output-port > .chip-type-exec {
+    background: rgb(255, 145, 0);
+    border-radius: 0;
+    border-top-left-radius: 9px;
+    border-bottom-left-radius: 9px;
 }
 
 .chip-large-preview {
