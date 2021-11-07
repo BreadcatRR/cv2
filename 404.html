@@ -23,11 +23,14 @@
 				const cv2 = await fetchCV2()
 				var keys = Object.keys(cv2)
 				
+				console.log(cv2)
+				console.log(keys)
+
 				var path = location.href.indexOf('chip');
 				var requested_chip = location.href.split('/').filter(x => x != '').at(-1)
 				
 				console.log(requested_chip)
-
+	
 				for (var i = 0; i < keys.length; i++) {
 					var chip = cv2.Nodes[keys[i]]
 					console.log(chip)
