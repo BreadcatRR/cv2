@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html>
+	<link rel="stylesheet" href="404.css">
   <head>
-    <title>My App</title>
+	<meta charset="utf-8"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>CV2 Chip lookup</title>
   </head>
   <body>
-    <h1>My App</h1>
-    <h2 id="header">Post Path: {PATH}</h2>
-  </body>
-  <script>
-    if (window.location.hash.length > 1) {
-      const path = window.location.hash.replace('#', '')
-      history.pushState({ page: 1 }, "Some title", '/static-dynamic-routing' + path)
+	<div id='main'>
 
-      document.getElementById('header').innerHTML = document.getElementById('header').innerHTML.replace('{PATH}', path)
-    }
+	</div>
+</body>
+  <script>
+	async function fetchCV2() {
+		var resp = await fetch('https://raw.githubusercontent.com/tyleo-rec/CircuitsV2Resources/master/misc/circuitsv2.json')
+		var data = await resp.json()
+		return data
+	}
+
+	async function main() {
+		if ( location.href.includes('chip') ) {
+				const cv2 = await fetchCV2()
+				var keys = Object.keys(cv2)
+				
+				var path = location.href.indexOf('chip');
+				var requested_chip = location.href.split('/').filter(x => x != '').at(-1)
+				
+				for (var i = 0; i < keys.length; i++) {
+					var chip = cv2[keys[i]]
+
+					if (chip.ReadonlyName.split(' ').join('-') == requested_chip) {
+						var title = document.createElement('p')
+						var description = document.createElement('p')
+
+						title.textContent == chip.ReadonlyName
+						
+						if (chip.Description != ''){ description.textContent = chip.Description }
+						else { description.textContent = 'No Description Available.' }
+
+					}
+				}
+
+			} else {
+				
+
+			}
+	}
   </script>
 </html>
