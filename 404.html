@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<link rel="stylesheet" href="/404.css">
+	<link rel="stylesheet" href="/style.css">
   <head>
 	<meta charset="utf-8"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -33,20 +34,62 @@
 	
 				for (var i = 0; i < keys.length; i++) {
 					var chip = cv2.Nodes[keys[i]]
+
+					// If the requested element has been found
 					if (chip.ReadonlyName.toLowerCase().split(' ').join('-') == requested_chip.toLowerCase()) {
-						var title = document.createElement('p')
-						var description = document.createElement('p')
+						var container = document.createElement('div')
+						var chip_preview = document.createElement('div')
+						var inputs = document.createElement('div')
+						var outputs = document.createElement('div')
 
-						title.textContent = chip.ReadonlyName
+						chip_preview.className = 'clickable chip-preview'
+						inputs.className = 'clickable output-port'
+						outputs.className = 'clickable input-port'
+
+						var input_ports = chip.NodeDescs[0].Inputs;
+						var output_ports = chip.NodeDescs[0].Outputs;
 						
-						if (chip.Description != ''){ description.textContent = chip.Description }
-						else { description.textContent = 'No Description Available.' }
+						input_ports.forEach(elem => {
+							let input_port = document.createElement('div')
+							let name = elem.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
+							let tooltip = elem.ReadonlyType
 
-						$('#main').append(title)
-						$('#main').append(description)
+							if (name == 't') { tooltip = chip.NodeDescs[0].ReadonlyTypeParams['T'] }
+							input_port.className = 'clickable chip-port chip-type-' + name
 
+							let chip_tooltip = document.createElement('div')
+							let chip_tooltip_text = document.createElement('p')
+							chip_tooltip.classList.add('chip-port-tooltip')
+							chip_tooltip_text.textContent = tooltip
+							
+							chip_tooltip.append(chip_tooltip_text)
+							input_port.append(chip_tooltip)
+							inputs.append(input_port)
+						});
 
+						output_ports.forEach(elem => {
+							let output_port = document.createElement('div')
+							let name = elem.ReadonlyType.split(' ').join('-').replace('<','-').replace('>','').toLowerCase()
+							let tooltip = elem.ReadonlyType
 
+							if (name == 't') { tooltip = chip.NodeDescs[0].ReadonlyTypeParams['T'] }
+							output_port.className = 'clickable chip-port chip-type-' + name
+
+							let chip_tooltip = document.createElement('div')
+							let chip_tooltip_text = document.createElement('p')
+							chip_tooltip.classList.add('chip-port-tooltip')
+							chip_tooltip_text.textContent = tooltip
+							
+							chip_tooltip.append(chip_tooltip_text)
+							output_port.append(chip_tooltip)
+							outputs.append(output_port)
+						});
+						
+						container.append(chip_preview)
+						chip_preview.append(inputs)
+						chip_preview.append(outputs)
+						
+						$('#main:first').append(container)
 						break;
 					}
 				}
