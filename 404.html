@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<link rel="stylesheet" href="/404.css">
-	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="404.css">
+	<link rel="stylesheet" href="style.css">
+	<!-- <link rel="stylesheet" href="/404.css">
+	<link rel="stylesheet" href="/style.css"> -->
   <head>
 	<meta charset="utf-8"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -42,7 +44,20 @@
 						var inputs = document.createElement('div')
 						var outputs = document.createElement('div')
 
-						chip_preview.className = 'clickable chip-preview'
+						var title = document.createElement('p')
+						var desc_title = document.createElement('p')
+						var desc = document.createElement('p')
+						
+						title.textContent = chip.ReadonlyName
+						desc_title.textContent = "Description"
+						desc.textContent = chip.Description
+
+						title.className = 'title'
+						desc_title.className = 'desc_title'
+						desc.className = 'desc'
+
+						container.className = 'clickable container'
+						chip_preview.className = 'clickable chip-large-preview'
 						inputs.className = 'clickable output-port'
 						outputs.className = 'clickable input-port'
 
@@ -85,6 +100,10 @@
 							outputs.append(output_port)
 						});
 						
+						container.append(title)
+						container.append(desc_title)
+						container.append(desc)
+
 						container.append(chip_preview)
 						chip_preview.append(inputs)
 						chip_preview.append(outputs)

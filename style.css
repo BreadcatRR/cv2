@@ -83,6 +83,7 @@ body {
     padding-top: 10px;
     padding-bottom: 5px;
     border-radius: 3px;
+    min-height: 10px;
 }
 /* .chip-preview {
     float: left;
@@ -95,6 +96,7 @@ body {
 #search-results > li > p {
     position: relative;
     top: 16px;
+    display: inline-block;
 }
 
 .chip-preview > .input-port{
@@ -182,7 +184,8 @@ body {
 
 .chip-port-tooltip {
     position: relative;
-    top: -30px;
+    top: -240%;
+    /* top: -30px; */
     display: none;
     height: max-content;
     width: max-content;
@@ -199,6 +202,14 @@ body {
 
 .chip-port-tooltip > p {
    margin: 0;
+}
+
+.chip-port-tooltip > p:nth-child(1) {
+   font-size: 16px;
+}
+.chip-port-tooltip > p:nth-child(2) {
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .chip-large-preview > * > .chip-port:hover {
@@ -250,6 +261,8 @@ body {
     padding-top: 30px;
     padding-bottom: 15px;
     border-radius: 9px;
+
+    min-height: 10px;
 }
 
 #filter-list {
@@ -268,7 +281,7 @@ body {
     margin: 6px;
     border-radius: 3px;
     border: none;
-    min-width: 150px;
+    min-width: 160px;
     background: rgb(241, 241, 241);
     box-shadow: 0 2px 5px rgb(209, 209, 209);
     display: flex;
@@ -286,10 +299,10 @@ body {
     /* color: var(--accent); */
 }
 
-#filter-list > div:active {
+/* #filter-list > div:active { */
     /* background: var(--accent); */
     /* background: rgb(209, 209, 209); */
-}
+/* } */
 
 #filter-list > div > p {
     user-select: none;

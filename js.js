@@ -13,23 +13,33 @@ function fetchFilters(cv2, nodes) {
 			if (!filter_list.includes(filterGroup.FilterPath[0])) {
 				filter_list.push(filterGroup.FilterPath[0])
 			}
-			
-			// filterGroup.FilterPath.forEach(function(filterName, index) {
-			// 	if (!filter_list.includes(filterName)) {
-			// 		filter_list.push(filterName)
-			// 	}
-			// })
 		})
 	}
 
 	return filter_list
+}
+function fetchSubFilters(cv2, nodes) {
+	let sub_filters = [];
+
+	for (var i = 0; i < nodes.length; i++) {
+		let chip = cv2.Nodes[nodes[i]]
+		chip.NodeFilters.forEach(function(filterGroup, i) {
+			if (!sub_filters.includes(filterGroup.FilterPath[0])) {
+				sub_filters.push(filterGroup.FilterPath[0])
+			}
+		})
+	}
+
+	return sub_filters
 }
 
 async function main() {
 	const cv2 = await fetchCV2()
 	const nodes = Object.keys(cv2.Nodes)
 	const filters = fetchFilters(cv2, nodes)
-
+	const sub_filters = fetchSubFilters(cv2, nodes)
+	
+	console.log(cv2)
 	// Setup filters
 	let filter_div = $('#filter-list:first')
 	filters.forEach(function(elem) {
@@ -42,10 +52,15 @@ async function main() {
 		checkbox_container.addEventListener('click',function() {
 			if (this.childNodes[0].checked == false) { this.childNodes[0].checked = true} 
 			else { this.childNodes[0].checked = false }
+			searchCV2($('#search-cv2')[0].value)
+			console.log($('#search-cv2')[0].value)
+
 		},capture=true)
 
 		button.addEventListener('click',function(e) {
 			e.preventDefault()
+			searchCV2($('#search-cv2')[0].value)
+			console.log($('#search-cv2')[0].value)
 		},capture=true)
 
 		// checkbox_text.onclick = function() {
@@ -61,19 +76,37 @@ async function main() {
 	function searchCV2(value) {
 		$('#search-results').empty()
 		
+		// Append all names of $('filter-list:checked')
 		var filter = [];
 		$('#filter-list div input:checked').siblings().each(function(i,elem) {filter.push(elem.textContent)})
-
+		console.log(filter)
 		for (var i = 0; i < nodes.length; i++) {
-			// let active_filters = $('#filter-list').forEach 
 			let raw_name = nodes[i]
 			let chip = cv2.Nodes[nodes[i]]
 			let results = [];
-				
-			console.log(filter)
 
 			// Search through all and check if value is inside chip name
-			
+			if (filter.length > 0){
+				try {
+					// Test if chip has filters and allow it if it has 
+					if ( chip.NodeFilters[0].FilterPath.some(function(x) { return filter.includes(x) }) || chip.NodeFilters[1].FilterPath.some(function(x) { return filter.includes(x) })) {}
+					else {
+						continue
+					}
+				} catch(e) {
+					// Chip does not have filters, therefore if there are
+					// any filters active, do not include this chip fuckwit
+					if (chip.NodeFilters.length != 0) {
+						if ( chip.NodeFilters[0].FilterPath.some(function(x) { return filter.includes(x) })) {
+						} else {
+							continue
+						}
+					} else {
+						continue;
+					}
+				}
+			}
+
 			if (chip.ReadonlyName.toLowerCase().includes(value.toLowerCase())) {
 				var inputs
 				var outputs
@@ -87,19 +120,15 @@ async function main() {
 				try { var anyTypes = chip.NodeDescs[0].ReadonlyTypeParams }
 				catch { var anyTypes = [] }
 				
-				// try { var filters = chip.NodeFilters[0] }
-				// catch { var filters = [] }
-				
 				results.push([
 							chip.ReadonlyName,
 							inputs,
 							outputs,
 							raw_name,
 							anyTypes,
-							// filters,
 							])
 			}
-
+			
 			// Append all elements found in search to table
 			results.forEach(function(elem) {
 				let list_item = document.createElement('li')
@@ -119,8 +148,6 @@ async function main() {
 							if (target.querySelector('.chip-details-container') === null){
 								let chip_details = cv2.Nodes[target.chip]
 								
-								console.log(chip_details)
-
 								let cont = document.createElement('div')
 								let descTitle = document.createElement('p')
 								let desc = document.createElement('p')
@@ -139,6 +166,7 @@ async function main() {
 
 								desc.style.fontWeight = 300
 								
+								// Remove stuff when it is clicked to close list item
 								target.addEventListener("transitionend", function() {
 									if (this.style.maxHeight == '80px') {
 										cont.remove()
@@ -152,7 +180,6 @@ async function main() {
 										if (this.style.maxHeight == '80px') { // If list element it is enlarging
 											container.style.marginTop = '20px'
 											container.style.opacity = 0
-										// } else if (this.style.height == 'fit-content') { // If it is returning to regular size
 										} else if (parseInt(this.style.maxHeight) > 80) { // If it is returning to regular size
 											container.style.opacity = 1
 											container.style.marginTop = '0'
@@ -197,16 +224,18 @@ async function main() {
 
 					if (name == 't') {
 						tooltip = elem[4]['T']
-					// 	console.log(tooltip)
 					}
 					chipInput.className = 'clickable chip-port chip-type-' + name
 
 					let chipTooltip = document.createElement('div')
-					let chipTooltipText = document.createElement('p')
+					let chipTooltipTitle = document.createElement('p')
+					let chipTooltipType = document.createElement('p')
 					chipTooltip.classList.add('chip-port-tooltip')
-					chipTooltipText.textContent = tooltip
+					chipTooltipTitle.Name = input.Name
+					chipTooltipType.textContent = tooltip
 					
-					chipTooltip.append(chipTooltipText)
+					chipTooltip.append(chipTooltipTitle)
+					chipTooltip.append(chipTooltipType)
 					chipInput.append(chipTooltip)
 					inputs.append(chipInput)
 				})
@@ -224,11 +253,14 @@ async function main() {
 					
 					chipOutput.className = 'clickable chip-port chip-type-' + name
 					let chipTooltip = document.createElement('div')
-					let chipTooltipText = document.createElement('p')
+					let chipTooltipTitle = document.createElement('p')
+					let chipTooltipType = document.createElement('p')
 					chipTooltip.classList.add('chip-port-tooltip')
-					chipTooltipText.textContent = tooltip
+					chipTooltipTitle.textContent = output.Name
+					chipTooltipType.textContent = tooltip
 
-					chipTooltip.append(chipTooltipText)
+					chipTooltip.append(chipTooltipTitle)
+					chipTooltip.append(chipTooltipType)
 					chipOutput.append(chipTooltip)
 					outputs.append(chipOutput)
 				})
@@ -247,7 +279,7 @@ async function main() {
 		}
 	}
 	
-	searchCV2('')
+	searchCV2($('#search-cv2')[0].value)
 
 	$('#search-cv2').on('input',function(e){
 		searchCV2(e.target.value)
