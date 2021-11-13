@@ -87,24 +87,28 @@ async function main() {
 
 			// Search through all and check if value is inside chip name
 			if (filter.length > 0){
-				try {
-					// Test if chip has filters and allow it if it has 
-					if ( chip.NodeFilters[0].FilterPath.some(function(x) { return filter.includes(x) }) || chip.NodeFilters[1].FilterPath.some(function(x) { return filter.includes(x) })) {}
-					else {
-						continue
-					}
-				} catch(e) {
-					// Chip does not have filters, therefore if there are
-					// any filters active, do not include this chip fuckwit
-					if (chip.NodeFilters.length != 0) {
-						if ( chip.NodeFilters[0].FilterPath.some(function(x) { return filter.includes(x) })) {
-						} else {
-							continue
-						}
-					} else {
-						continue;
-					}
+				var filter_0;
+				var filter_1;
+
+				try {filter_0 = chip.NodeFilters[0].FilterPath.filter(x => filter.includes(x))}
+				catch(e) {filter_0 = []}
+
+				try {filter_1 = chip.NodeFilters[1].FilterPath.filter(x => filter.includes(x))}
+				catch(e) {filter_1 = []}
+
+				var final = filter_0.concat(filter_1).filter(function onlyUnique(value, index, self) {
+					return self.indexOf(value) === index;
+				  })
+
+				if (final.length == filter.length) {
+				} else {
+					continue
 				}
+	
+				// if (filter_0.length == filter.length) {
+				// } else {
+				// 	continue
+				// }
 			}
 
 			if (chip.ReadonlyName.toLowerCase().includes(value.toLowerCase())) {
